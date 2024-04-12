@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 0xSimon Tools
+
+This repo contains the frontend for a set of tools that I find useful for Web3 and Solidity development. The tools are:
+
+1.  **EIP712 Code Gen**: A tool that generates TypeScript code for EIP712 typed data structures.
+2.  **Solidity Errors Code Gen (Jesper)**: A tool that generates TypeScript code for Solidity contracts. (TODO: Add link to Jesper's repo)
 
 ## Getting Started
 
