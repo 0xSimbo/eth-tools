@@ -8,10 +8,8 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { PiTrashThin } from "react-icons/pi";
-import { CardDescription, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { signmeee } from "@/lib/temp";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { isAddress } from "ethers/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -331,357 +329,110 @@ import { TypedDataSigner } from "@ethersproject/abstract-signer";\n\n`;
   };
 
   return (
-    <div className="flex min-h-screen w-full">
-      <div className="border-r border-gray-200 bg-gray-100/40 dark:border-gray-800 dark:bg-gray-800/40">
-        <div className="flex flex-col gap-2">
-          <div className="flex h-[60px] items-center px-6">
-            <Link className="flex items-center gap-2 font-semibold" href="#">
-              <img className="h-12 w-12 rounded-full" src="/cat.jpg" />
-              <span className="">0xSimon Tools</span>
-            </Link>
-          </div>
-          <nav className="grid items-start px-4 text-sm font-medium">
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-              href="#"
-            >
-              <HomeIcon className="h-4 w-4" />
-              Home
-            </Link> */}
-            <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <PackageIcon className="h-4 w-4" />
-              EIP712 Code Gen
-              {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge> */}
-            </Link>
-            <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <PackageIcon className="h-4 w-4" />
-              Jesper Error Checker(Coming Soon)
-              {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge> */}
-            </Link>
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <PackageIcon className="h-4 w-4" />
-              Products
-            </Link> */}
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <UsersIcon className="h-4 w-4" />
-              Customers
-            </Link> */}
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <LineChartIcon className="h-4 w-4" />
-              Analytics
-            </Link> */}
-          </nav>
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col max-h-screen overflow-y-scroll">
-        <div className="mx-auto prose prose-lg max-w-5xl py-8 lg:py-12 flex flex-col gap-y-4">
-          <h1 className="text-4xl font-bold">EIP-712 Code Generator</h1>
-          <p>
-            The Ethereum Improvement Proposal 712, or EIP-712, defines a
-            standard way to hash and sign structured data. It provides a
-            flexible and secure method for signing messages, which is
-            particularly useful for applications such as decentralized finance
-            (DeFi), non-fungible tokens (NFTs), and identity verification.
-          </p>
-          <h2 className="text-xl mt-4">Check and generate your EIP712 Types</h2>
-          <Input
-            type="text"
-            placeholder="Enter type"
-            value={typeHashes[0]}
-            onChange={handleFirstTypeChange}
-          />
+    <div className="flex flex-1 flex-col h-screen overflow-y-scroll">
+      <div className="mx-auto prose prose-lg max-w-5xl py-8 lg:py-12 flex flex-col gap-y-4">
+        <h1 className="text-4xl font-bold">EIP-712 Code Generator</h1>
+        <p>
+          The Ethereum Improvement Proposal 712, or EIP-712, defines a standard
+          way to hash and sign structured data. It provides a flexible and
+          secure method for signing messages, which is particularly useful for
+          applications such as decentralized finance (DeFi), non-fungible tokens
+          (NFTs), and identity verification.
+        </p>
+        <h2 className="text-xl mt-4">Check and generate your EIP712 Types</h2>
+        <Input
+          type="text"
+          placeholder="Enter type"
+          value={typeHashes[0]}
+          onChange={handleFirstTypeChange}
+        />
 
-          {typeHashes.slice(1).map((type, index) => {
-            return (
-              <div className="flex gap-2 items-center">
-                <Input
-                  key={index + 1}
-                  type="text"
-                  placeholder="Enter type"
-                  value={type}
-                  onChange={(e) => handleFirstTypeChange(e, index + 1)}
-                />
-                <PiTrashThin
-                  className="h-6 w-6 text-slate-700 hover:text-slate-900 duration-75 cursor-pointer"
-                  onClick={() => removeIndex(index + 1)}
-                />
-              </div>
-            );
-          })}
-          <Button onClick={addEmptyType}>Add Type</Button>
-          <p>
-            EIP-712 uses a domain separator to define the signing domain for a
-            message. This domain includes the contract name, version, and chain
-            ID, ensuring that the message is specific to the intended domain.
-          </p>
-          <Label>Contract Name</Label>
-          <Input
-            value={contractConfig.contractName}
-            onChange={setContractConfigNameFromEvent}
-          />
-          <Label>Version</Label>
-          <Input
-            value={contractConfig.version}
-            onChange={setContractConfigVersionFromEvent}
-          />
-          <Label>Chain ID</Label>
-          <Input
-            value={contractConfig.chainId.toString()}
-            onChange={setContractConfigChainIdFromEvent}
-          />
-          <Label>Contract Address</Label>
-          <Input
-            value={contractConfig.contractAddress}
-            onChange={setContractConfigContractAddressFromEvent}
-          />
+        {typeHashes.slice(1).map((type, index) => {
+          return (
+            <div className="flex gap-2 items-center">
+              <Input
+                key={index + 1}
+                type="text"
+                placeholder="Enter type"
+                value={type}
+                onChange={(e) => handleFirstTypeChange(e, index + 1)}
+              />
+              <PiTrashThin
+                className="h-6 w-6 text-slate-700 hover:text-slate-900 duration-75 cursor-pointer"
+                onClick={() => removeIndex(index + 1)}
+              />
+            </div>
+          );
+        })}
+        <Button onClick={addEmptyType}>Add Type</Button>
+        <p>
+          EIP-712 uses a domain separator to define the signing domain for a
+          message. This domain includes the contract name, version, and chain
+          ID, ensuring that the message is specific to the intended domain.
+        </p>
+        <Label>Contract Name</Label>
+        <Input
+          value={contractConfig.contractName}
+          onChange={setContractConfigNameFromEvent}
+        />
+        <Label>Version</Label>
+        <Input
+          value={contractConfig.version}
+          onChange={setContractConfigVersionFromEvent}
+        />
+        <Label>Chain ID</Label>
+        <Input
+          value={contractConfig.chainId.toString()}
+          onChange={setContractConfigChainIdFromEvent}
+        />
+        <Label>Contract Address</Label>
+        <Input
+          value={contractConfig.contractAddress}
+          onChange={setContractConfigContractAddressFromEvent}
+        />
 
-          <Label>Framework</Label>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Ethers v5" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Framework</SelectLabel>
-                <SelectItem value="ethersV5">Ethers v5</SelectItem>
-                <SelectItem disabled value="viem">
-                  Viem (Coming Soon)
-                </SelectItem>
-                {/* <SelectItem value="apple">Apple</SelectItem>
+        <Label>Framework</Label>
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Ethers v5" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Framework</SelectLabel>
+              <SelectItem value="ethersV5">Ethers v5</SelectItem>
+              <SelectItem disabled value="viem">
+                Viem (Coming Soon)
+              </SelectItem>
+              {/* <SelectItem value="apple">Apple</SelectItem>
                 <SelectItem value="banana">Banana</SelectItem>
                 <SelectItem value="blueberry">Blueberry</SelectItem>
                 <SelectItem value="grapes">Grapes</SelectItem>
                 <SelectItem value="pineapple">Pineapple</SelectItem> */}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Button onClick={getCodeFromTypehashes}>Generate Code</Button>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Button onClick={getCodeFromTypehashes}>Generate Code</Button>
 
-          {code.length > 0 && (
-            // <div className="bg-black text-white p-4 flex flex-col gap-y-4 rounded-lg text-xs">
-            //   <pre>
-            //     {code.map((c) => {
-            //       return c;
-            //     })}
-            //   </pre>
-            // </div>
+        {code.length > 0 && (
+          // <div className="bg-black text-white p-4 flex flex-col gap-y-4 rounded-lg text-xs">
+          //   <pre>
+          //     {code.map((c) => {
+          //       return c;
+          //     })}
+          //   </pre>
+          // </div>
 
-            <div className=" p-4 flex flex-col gap-y-4 rounded-lg text-xs">
-              <CopyBlock
-                text={code.join("\n")}
-                language="typescript"
-                showLineNumbers={false}
-                wrapLongLines={true}
-                theme={dracula}
-              />
-            </div>
-          )}
-        </div>
+          <div className=" p-4 flex flex-col gap-y-4 rounded-lg text-xs">
+            <CopyBlock
+              text={code.join("\n")}
+              language="typescript"
+              showLineNumbers={false}
+              wrapLongLines={true}
+              theme={dracula}
+            />
+          </div>
+        )}
       </div>
     </div>
-  );
-}
-
-function ActivityIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-    </svg>
-  );
-}
-
-function CreditCardIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="20" height="14" x="2" y="5" rx="2" />
-      <line x1="2" x2="22" y1="10" y2="10" />
-    </svg>
-  );
-}
-
-function DollarSignIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" x2="12" y1="2" y2="22" />
-      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-    </svg>
-  );
-}
-
-function HomeIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  );
-}
-
-function LineChartIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 3v18h18" />
-      <path d="m19 9-5 5-4-4-3 3" />
-    </svg>
-  );
-}
-
-function Package2Icon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
-      <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
-      <path d="M12 3v6" />
-    </svg>
-  );
-}
-
-function PackageIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m7.5 4.27 9 5.15" />
-      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-      <path d="m3.3 7 8.7 5 8.7-5" />
-      <path d="M12 22V12" />
-    </svg>
-  );
-}
-
-function ShoppingCartIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="8" cy="21" r="1" />
-      <circle cx="19" cy="21" r="1" />
-      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
-    </svg>
-  );
-}
-
-function UsersIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
   );
 }

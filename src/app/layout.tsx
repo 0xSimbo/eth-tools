@@ -5,6 +5,7 @@ import { DM_Sans } from "next/font/google";
 import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { SidebarContainer } from "@/components/SidebarContainer";
 
 const dm_sans = DM_Sans({
   subsets: ["latin"],
@@ -20,8 +21,8 @@ const rethink_sans = Rethink_Sans({
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={dm_sans.variable + rethink_sans.variable}>
-        {children}
+      <body>
+        <SidebarContainer>{children}</SidebarContainer>
         <Toaster />
       </body>
     </html>
