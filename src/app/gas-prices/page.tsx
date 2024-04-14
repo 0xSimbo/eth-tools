@@ -124,8 +124,13 @@ const GasPrices = async () => {
   let gasStats: GasStat[] = [];
   for (const mini of minis) {
     const { client } = mini;
-    const { maxFeePerGas, maxPriorityFeePerGas } =
+    let { maxFeePerGas, maxPriorityFeePerGas } =
       await client.estimateFeesPerGas();
+    if (!maxFeePerGas) {
+      //@ts-ignore
+      const { gasPrice } = await client.estimateFeesPerGas({ type: "legacy" });
+      maxFeePerGas = gasPrice;
+    }
     gasStats.push({
       label: mini.label,
       maxFeePerGas: maxFeePerGas?.toString() || "0",

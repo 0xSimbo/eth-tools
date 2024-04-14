@@ -2,16 +2,35 @@ import Link from "next/link";
 import { SVGProps } from "react";
 import { PiGithubLogo, PiTwitterLogo } from "react-icons/pi";
 import { Button } from "./ui/button";
+import { MenuButton } from "./MenuButton";
 
 type SidebarContainerProps = {
   children: React.ReactNode;
 };
+
+export const sections = [
+  {
+    title: "EIP712 Code Gen",
+    href: "/eip712",
+    icon: PackageIcon,
+  },
+  {
+    title: "Gas Prices",
+    href: "/gas-prices",
+    icon: PackageIcon,
+  },
+  {
+    title: "Jesper Error Checker",
+    href: "/jesper-error-checker",
+    icon: PackageIcon,
+  },
+];
 export const SidebarContainer: React.FC<SidebarContainerProps> = ({
   children,
 }) => {
   return (
-    <div className="flex min-h-screen w-full">
-      <div className="border-r border-gray-200 bg-gray-100/40 dark:border-gray-800 flex flex-col dark:bg-gray-800/40">
+    <div className=" min-h-screen w-full flex">
+      <div className="sm:flex hidden border-r border-gray-200 bg-gray-100/40 dark:border-gray-800  flex-col dark:bg-gray-800/40">
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
             <Link className="flex items-center gap-2 font-semibold" href="">
@@ -20,64 +39,15 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
             </Link>
           </div>
           <nav className="grid items-start px-4 text-sm font-medium">
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-              href="#"
-            >
-              <HomeIcon className="h-4 w-4" />
-              Home
-            </Link> */}
-            <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="/eip712"
-            >
-              <PackageIcon className="h-4 w-4" />
-              EIP712 Code Gen
-              {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge> */}
-            </Link>
-            <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="/gas-prices"
-            >
-              <PackageIcon className="h-4 w-4" />
-              Gas Prices
-              {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge> */}
-            </Link>
-            <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <PackageIcon className="h-4 w-4" />
-              Jesper Error Checker(Coming Soon)
-              {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge> */}
-            </Link>
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <PackageIcon className="h-4 w-4" />
-              Products
-            </Link> */}
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <UsersIcon className="h-4 w-4" />
-              Customers
-            </Link> */}
-            {/* <Link
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
-            >
-              <LineChartIcon className="h-4 w-4" />
-              Analytics
-            </Link> */}
+            {sections.map((section) => (
+              <Link
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                href={section.href}
+              >
+                <section.icon className="h-4 w-4" />
+                {section.title}
+              </Link>
+            ))}
           </nav>
         </div>
         <div className="grow flex  flex-col h-max justify-end">
@@ -117,7 +87,10 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
           </div>
         </div>
       </div>
-      {children}
+      <div className="mx-[4%] sm:mx-0 mt-12 sm:mt-0   w-full">
+        <MenuButton />
+        {children}
+      </div>
     </div>
   );
 };
