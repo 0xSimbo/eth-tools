@@ -66,7 +66,7 @@ export default function Component({ gasStats }: { gasStats: GasStat[] }) {
           />
         </div>
 
-        <div className="grid md:grid-cols-2 items-center justify-around w-full b gap-4">
+        <div className="grid md:grid-cols-2 items-center justify-around w-full b gap-4 ">
           {filteredGasStats.map((gasStat, index) => (
             <div className="border p-4 rounded-lg">
               <div className="flex flex-row items-center gap-4">
