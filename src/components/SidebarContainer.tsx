@@ -14,7 +14,7 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
       <div className="border-r border-gray-200 bg-gray-100/40 dark:border-gray-800 flex flex-col dark:bg-gray-800/40">
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
-            <Link className="flex items-center gap-2 font-semibold" href="#">
+            <Link className="flex items-center gap-2 font-semibold" href="">
               <img className="h-12 w-12 rounded-full" src="/cat.jpg" />
               <span className="">0xSimon Tools</span>
             </Link>
@@ -29,10 +29,20 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
             </Link> */}
             <Link
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-              href="#"
+              href="/eip712"
             >
               <PackageIcon className="h-4 w-4" />
               EIP712 Code Gen
+              {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                6
+              </Badge> */}
+            </Link>
+            <Link
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              href="/gas-prices"
+            >
+              <PackageIcon className="h-4 w-4" />
+              Gas Prices
               {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 6
               </Badge> */}
