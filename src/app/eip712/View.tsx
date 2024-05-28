@@ -169,7 +169,7 @@ export default function Component({
         }
         \n
          derive${key}Hash(${key}: ${typeName}): string {
-          return _TypedDataEncoder.hash(this.domain, this.typesa, ${key});
+          return _TypedDataEncoder.hash(this.domain, this.types, ${key});
         }
         \n
 
