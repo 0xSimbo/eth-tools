@@ -1,15 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
-import { SVGProps, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { PiTrashThin } from "react-icons/pi";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CopyBlock, dracula } from "react-code-blocks";
 import { isAddress } from "ethers/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -43,6 +39,7 @@ const getEthersTypestringFromSolidityType = (type: string): string => {
 };
 const codeSelections = ["ethersV5", "viem"] as const;
 type CodeSelection = (typeof codeSelections)[number];
+const ZeroXString = "`0x${string}`";
 
 export type ContractConfig = {
   contractName: string;
@@ -81,7 +78,7 @@ export default function Component({
     setContractConfig((prev) => {
       return { ...prev, contractName: e.target.value };
     });
-    updateSearchParams("contractName", e.target.value);
+    updateSearchParams("verifyingContract", e.target.value);
   };
   const setContractConfigVersionFromEvent = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -170,6 +167,34 @@ export default function Component({
             const signature = await signer._signTypedData(this.domain,this.types,${key});
             return signature;
         }
+        \n
+         derive${key}Hash(${key}: ${typeName}): string {
+          return _TypedDataEncoder.hash(this.domain, this.typesa, ${key});
+        }
+        \n
+
+        async verify${key}({
+          ${key},
+          signature,
+          addressToCheck,
+        }: {
+          ${key}: ${typeName};
+          signature: string;
+          addressToCheck: ${ZeroXString};
+        }): Promise<{ signer: ${ZeroXString}; isValid: boolean }
+        > {
+          const address = await verifyTypedData(
+            this.domain,
+            this.types,
+            ${key},
+            signature
+          );
+          return {
+            signer: address as ${ZeroXString},
+            isValid: address === addressToCheck,
+          };
+        }
+        
         `;
       eip712ClassMiddleCodes.push(functionStr);
 
@@ -183,6 +208,7 @@ export default function Component({
         TypedDataDomain,
         TypedDataField,
       } from "ethers"; \n
+      import { _TypedDataEncoder, verifyTypedData } from "ethers/lib/utils";\n
 import { TypedDataSigner } from "@ethersproject/abstract-signer";\n\n`;
 
     let classStartCode = `export class EIP712 {
